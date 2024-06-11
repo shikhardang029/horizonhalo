@@ -1061,6 +1061,7 @@ class VariantSelects extends HTMLElement {
       const target = this.getInputForEventTarget(event.target);
       this.currentVariant = this.getVariantData(target.id);
       this.updateSelectedSwatchValue(event);
+      this.updateVariantInput();
 
       publish(PUB_SUB_EVENTS.optionValueSelectionChange, {
         data: {
@@ -1072,6 +1073,20 @@ class VariantSelects extends HTMLElement {
     });
   }
 
+    updateVariantInput() {
+      //console.log(this.currentVariant);
+      //console.log(VariantDetilsTextElement);
+      const allVariantJSONData = JSON.parse(document.querySelector('#variant_metafield_data').textContent);
+      allVariantJSONData.forEach(item => {
+        if (this.currentVariant.id == item.id) {
+          document.querySelector('#hair_type').innerHTML = item.hair_type;
+          document.querySelector('#hair_brush_type').innerHTML = item.hair_brush_type;
+          document.querySelector('#hair_brush_size').innerHTML = item.hair_brush_size;
+          document.querySelector('#handle_length').innerHTML = item.handle_length;
+          document.querySelector('#additional_information_recommended_medium').innerHTML = item.additional_information_recommended_medium;
+        }
+    });
+  }
   updateSelectedSwatchValue({ target }) {
     const { value, tagName } = target;
 

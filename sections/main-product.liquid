@@ -223,6 +223,30 @@
                       {% render 'icon-caret' %}
                     </summary>
                     <div class="accordion__content rte" id="ProductAccordion-{{ block.id }}-{{ section.id }}">
+                        <div class="specifications">
+                          <div class="specification-details">
+                              <div class="specification-hair">
+                                  <h3>Hair</h3>
+                                  <ul>
+                                      <li><strong>Type: </strong><span id="hair_type">{{ product.selected_or_first_available_variant.metafields.custom.hair_type }}</span></li>
+                                      <li><strong>Brush Shape: </strong><span id="hair_brush_type">{{ product.selected_or_first_available_variant.metafields.custom.hair_brush_type }}</span></li>
+                                      <li><strong>Brush size: </strong> <span id="hair_brush_size">{{ product.selected_or_first_available_variant.metafields.custom.hair_brush_size }}</span></li>
+                                  </ul>
+                              </div>
+                              <div class="specification-handle">
+                                  <h3>Handle</h3>
+                                  <ul>
+                                      <li><strong>Handle Length: </strong><span id="handle_length">{{ product.selected_or_first_available_variant.metafields.custom.handle_length }}</span></li>
+                                  </ul>
+                              </div>
+                              <div class="specification-additional-information">
+                                  <h3>Additional Information</h3>
+                                  <ul>
+                                      <li><strong>Recommended Medium: </strong><span id="additional_information_recommended_medium">{{ product.selected_or_first_available_variant.metafields.custom.additional_information_recommended_medium }}</span></li>
+                                  </ul>
+                              </div>
+                          </div>
+                      </div>
                       {{ block.settings.content }}
                       {{ block.settings.page.content }}
                     </div>
@@ -716,6 +740,21 @@
     </script>
   </div>
 </product-info>
+
+<script id="variant_metafield_data" type="application/json">
+[
+  {% for variant in product.variants %}
+  {
+      "id" : "{{ variant.id  }}",
+      "hair_type" : "{{ variant.metafields.custom.hair_type }}",
+      "hair_brush_type" : "{{ variant.metafields.custom.hair_brush_type }}",
+      "hair_brush_size" : "{{ variant.metafields.custom.hair_brush_size }}",
+      "handle_length" : "{{ variant.metafields.custom.handle_length }}",
+      "additional_information_recommended_medium" : "{{ variant.metafields.custom.additional_information_recommended_medium }}"
+  }{% unless forloop.last %} , {%endunless %}
+  {% endfor %}
+]
+</script>
 
 {% schema %}
 {
